@@ -387,6 +387,7 @@
     display:flex;
     align-items:center;
     gap:8px;
+    text-decoration:none;
   }
   .printbtn:hover{ background:#9c421f; }
 
@@ -941,6 +942,7 @@
     display:flex;
     align-items:center;
     gap:9px;
+    text-decoration:none;
     opacity:0;
     transform:translateY(16px);
     pointer-events:none;
@@ -1091,12 +1093,12 @@
     </div>
   </div>
 
-  <button class="float-pdf" id="floatPdfBtn" onclick="window.print()">⭳ Save as PDF</button>
+  <a class="float-pdf" id="floatPdfBtn" href="Viacheslav_Berezin_CV.pdf" download="Viacheslav_Berezin_CV.pdf">⭳ Get PDF version</a>
 
   <div class="controlbar">
     <span class="label">Select language</span>
     <div class="langswitch" id="langswitch"></div>
-    <button class="printbtn" onclick="window.print()">⭳ Save as PDF</button>
+    <a class="printbtn" id="topPdfBtn" href="Viacheslav_Berezin_CV.pdf" download="Viacheslav_Berezin_CV.pdf">⭳ Get PDF version</a>
     <button class="printbtn atsbtn" id="atsBtn">ATS-friendly PDF</button>
   </div>
 
@@ -1550,6 +1552,9 @@ function init(){
   const switchRoot = document.getElementById("langswitch");
   switchRoot.innerHTML = LANG_ORDER.map(l=>`<button data-lang="${l}">${DATA[l].langName}</button>`).join("");
 
+  const topPdfBtn = document.getElementById("topPdfBtn");
+  const floatPdfBtn = document.getElementById("floatPdfBtn");
+
   function setLang(lang){
     LANG_ORDER.forEach(l=>{
       document.getElementById("sheet-"+l).classList.toggle("active", l===lang);
@@ -1557,6 +1562,8 @@ function init(){
     Array.from(switchRoot.children).forEach(btn=>{
       btn.classList.toggle("active", btn.getAttribute("data-lang")===lang);
     });
+    topPdfBtn.textContent = DATA[lang].getPdfLabel;
+    floatPdfBtn.textContent = DATA[lang].getPdfLabel;
   }
 
   switchRoot.addEventListener("click", (e)=>{
